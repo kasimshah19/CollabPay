@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sora, Inter } from "next/font/google";
 import { Header } from "@/components/Header";
+import { ToastProvider } from "@/components/ui/Toast";
 import "./globals.css";
 
 const sora = Sora({ 
@@ -42,11 +43,13 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${sora.variable} ${inter.variable} font-inter antialiased`}>
-        <div className="max-w-content mx-auto px-page py-5">
-          <Header />
-          {children}
-        </div>
+      <body className={`${sora.variable} ${inter.variable} font-body antialiased`}>
+        <ToastProvider>
+          <div className="max-w-content mx-auto px-page py-5">
+            <Header />
+            {children}
+          </div>
+        </ToastProvider>
       </body>
     </html>
   );
