@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { env } from "../config/env.js";
-import { AppError } from "./AppError.js";
+import { AppError } from "../middleware/AppError.js";
 
 export function errorHandler(
   err: any,
@@ -14,7 +14,10 @@ export function errorHandler(
       error: {
         message: "Validation failed",
         code: "VALIDATION_ERROR",
-        details: err.errors,
+        details: err.errors.map((e: any) => ({
+          path: e.path.join('.'),
+          message: e.message
+        })),
       },
     });
     return;
@@ -47,3 +50,4 @@ export function errorHandler(
     ...(env.NODE_ENV === "development" && { stack: err.stack }),
   });
 }
+

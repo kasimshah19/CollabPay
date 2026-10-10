@@ -19,12 +19,16 @@ app.use(express.json());
 
 import campaignRouter from "./routes/campaign.routes.js";
 import applicationRouter from "./routes/application.routes.js";
+import submissionRouter from "./routes/submission.routes.js";
+import walletRouter from "./routes/wallet.routes.js";
 
 // --------------- Routes ------------------
 app.use("/api", healthRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/campaigns", campaignRouter);
 app.use("/api/applications", applicationRouter);
+app.use("/api/submissions", submissionRouter);
+app.use("/api/wallet", walletRouter);
 
 if (env.NODE_ENV !== 'production') {
   app.use("/api/_debug", debugRouter);

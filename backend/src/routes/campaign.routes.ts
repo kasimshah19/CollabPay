@@ -4,6 +4,7 @@ import { validate } from "../middleware/validate.js";
 import { validateObjectId } from "../middleware/validateObjectId.js";
 import { createCampaignSchema, editCampaignSchema } from "../validators/campaign.schema.js";
 import * as campaignController from "../controllers/campaign.controller.js";
+import * as submissionController from "../controllers/submission.controller.js";
 import { applyToCampaign } from "../controllers/application.controller.js";
 import { applySchema } from "../validators/application.schema.js";
 
@@ -20,5 +21,6 @@ campaignRouter.get("/:id", requireAuth, requireRole("brand"), validateObjectId("
 campaignRouter.patch("/:id", requireAuth, requireRole("brand"), validateObjectId("id"), validate(editCampaignSchema), campaignController.editCampaign);
 campaignRouter.post("/:id/cancel", requireAuth, requireRole("brand"), validateObjectId("id"), campaignController.cancelCampaign);
 campaignRouter.get("/:id/applications", requireAuth, requireRole("brand"), validateObjectId("id"), campaignController.getCampaignApplicants);
+campaignRouter.get("/:id/submissions", requireAuth, requireRole("brand"), validateObjectId("id"), submissionController.getCampaignSubmissions);
 
 export default campaignRouter;

@@ -4,6 +4,7 @@ import { env } from './env';
 export const connectDb = async () => {
   try {
     await mongoose.connect(env.MONGODB_URI);
+    await Promise.all(mongoose.modelNames().map(name => mongoose.model(name).init()));
     console.log('✅ MongoDB connection successful');
   } catch (error) {
     console.error('❌ MongoDB connection failed:', error);

@@ -77,7 +77,7 @@ export const approveApplication = async (applicationId: mongoose.Types.ObjectId,
           $expr: {
             $and: [
               { $lt: ["$approvedCount", "$slots"] },
-              { $lte: [{ $add: ["$reservedPaise", fee] }, "$budgetPaise"] }
+              { $lte: [{ $add: ["$reservedPaise", "$paidPaise", fee] }, "$budgetPaise"] }
             ]
           }
         },
@@ -92,7 +92,7 @@ export const approveApplication = async (applicationId: mongoose.Types.ObjectId,
         const freshCampaign = await Campaign.findById(campaign._id).session(session);
         if (freshCampaign?.status !== "open") throw new AppError(400, "Campaign is not open", "INVALID_STATE");
         if (freshCampaign && freshCampaign.approvedCount >= freshCampaign.slots) throw new AppError(400, "Campaign is full", "CAMPAIGN_FULL");
-        if (freshCampaign && freshCampaign.reservedPaise + fee > freshCampaign.budgetPaise) throw new AppError(400, "Budget exceeded", "BUDGET_EXCEEDED");
+        if (freshCampaign && freshCampaign.reservedPaise + (freshCampaign.paidPaise || 0) + fee > freshCampaign.budgetPaise) throw new AppError(400, "Budget exceeded", "BUDGET_EXCEEDED");
         throw new AppError(400, "Failed to reserve budget", "INVALID_STATE");
       }
 

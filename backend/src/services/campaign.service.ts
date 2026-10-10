@@ -21,7 +21,7 @@ export const getBrandCampaigns = async (brandId: mongoose.Types.ObjectId, page: 
   
   return campaigns.map(c => ({
     ...c,
-    availablePaise: c.budgetPaise - c.reservedPaise,
+    availablePaise: c.budgetPaise - c.reservedPaise - (c.paidPaise || 0),
     slotsLeft: c.slots - c.approvedCount,
     applicationsOpen: c.status === "open" && now < new Date(c.applicationDeadline),
     payoutPreview: calculatePayout(c.feePerCreatorPaise)
@@ -45,7 +45,7 @@ export const getCampaignById = async (id: mongoose.Types.ObjectId, brandId: mong
   const now = new Date();
   return {
     ...campaign,
-    availablePaise: campaign.budgetPaise - campaign.reservedPaise,
+    availablePaise: campaign.budgetPaise - campaign.reservedPaise - (campaign.paidPaise || 0),
     slotsLeft: campaign.slots - campaign.approvedCount,
     applicationsOpen: campaign.status === "open" && now < new Date(campaign.applicationDeadline),
     payoutPreview: calculatePayout(campaign.feePerCreatorPaise),
@@ -67,7 +67,7 @@ export const getOpenCampaigns = async (page: number = 1, limit: number = 20) => 
 
   return campaigns.map(c => ({
     ...c,
-    availablePaise: c.budgetPaise - c.reservedPaise,
+    availablePaise: c.budgetPaise - c.reservedPaise - (c.paidPaise || 0),
     slotsLeft: c.slots - c.approvedCount,
     applicationsOpen: true,
     payoutPreview: calculatePayout(c.feePerCreatorPaise)
@@ -86,7 +86,7 @@ export const editCampaign = async (id: mongoose.Types.ObjectId, brandId: mongoos
     exprConditions.push({ $lte: ["$approvedCount", updates.slots] });
   }
   if (updates.budgetPaise !== undefined) {
-    exprConditions.push({ $lte: ["$reservedPaise", updates.budgetPaise] });
+    exprConditions.push({ $lte: [{ $add: ["$reservedPaise", "$paidPaise"] }, updates.budgetPaise] });
   }
   if (updates.feePerCreatorPaise !== undefined && updates.feePerCreatorPaise !== campaign.feePerCreatorPaise) {
     exprConditions.push({ $eq: ["$approvedCount", 0] });

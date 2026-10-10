@@ -13,6 +13,8 @@ export interface ICampaign extends Document {
   approvedCount: number;
   reservedPaise: number;
   cancelledAt?: Date;
+  paidPaise: number;
+  platformChargesPaise: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -30,6 +32,8 @@ const campaignSchema = new Schema<ICampaign>(
     status: { type: String, enum: ["open", "cancelled"], default: "open" },
     approvedCount: { type: Number, default: 0, min: 0 },
     reservedPaise: { type: Number, default: 0, min: 0 },
+    paidPaise: { type: Number, default: 0, min: 0 },
+    platformChargesPaise: { type: Number, default: 0, min: 0 },
     cancelledAt: { type: Date },
   },
   { timestamps: true }

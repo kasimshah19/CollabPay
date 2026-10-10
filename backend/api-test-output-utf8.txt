@@ -1,0 +1,41 @@
+﻿=== 1. GET /api/health ===
+
+
+=== 2. GET /api/health/ready ===
+
+
+3. Signup as Brand
+
+
+4. Signup as Creator
+
+
+5. Duplicate Email (409)
+
+HTTP Code: 000
+
+6. Weak Password (400)
+
+HTTP Code: 000
+
+7. Login Correct Password
+
+
+8. Login Wrong Password
+
+HTTP Code: 000
+
+9. GET /api/auth/me with token
+
+
+10. GET /api/auth/me without token
+
+HTTP Code: 000
+
+11. Brand token on creator-only route (403)
+
+HTTP Code: 000
+
+12. Creator token on creator-only route (200)
+
+HTTP Code: 000
