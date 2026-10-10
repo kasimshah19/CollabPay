@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CollabPay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#F4F3FB;--surface:#fff;--ink:#14112E;--muted:#6B6890;--line:#E4E2F2;--primary:#6C4CFF;--primary-ink:#fff;--gold:#FFB020;--ok:#16A57F;--warn:#C97A00;--bad:#D6395B;--hero:#14112E;--hero-ink:#fff;--soft:#EEEAFF;
+--f1:'Sora',system-ui,sans-serif;--f2:'Inter',system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D0B1F;--surface:#17143A;--ink:#F1EFFF;--muted:#9A97C4;--line:#2B2760;--primary:#8B73FF;--hero:#241E5E;--soft:#26215E;--ok:#3DD6A8;--warn:#FFB020;--bad:#FF6B8A}}
+:root[data-theme="dark"]{--bg:#0D0B1F;--surface:#17143A;--ink:#F1EFFF;--muted:#9A97C4;--line:#2B2760;--primary:#8B73FF;--hero:#241E5E;--soft:#26215E;--ok:#3DD6A8;--warn:#FFB020;--bad:#FF6B8A}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--f2)}
+h1,h2,h3{font-family:var(--f1);margin:0;letter-spacing:-.02em}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:20px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0 20px}
+.logo{font:700 20px var(--f1);display:flex;align-items:center;gap:8px}
+.mark{width:28px;height:28px;border-radius:9px;background:var(--primary);position:relative}
+.mark::after{content:"";position:absolute;right:-4px;bottom:-4px;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid var(--bg)}
+.btn{border:0;border-radius:12px;padding:10px 16px;font-weight:600;background:var(--primary);color:var(--primary-ink)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.sm{padding:6px 12px;font-size:13px;border-radius:10px}
+.btn.gold{background:var(--gold);color:#14112E}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.seg{display:inline-flex;background:var(--soft);border-radius:14px;padding:4px;gap:2px}
+.seg button{border:0;background:transparent;color:var(--muted);padding:8px 16px;border-radius:10px;font-weight:600}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 6px rgba(20,17,46,.12)}
+.auth{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;min-height:540px}
+.pitch{background:var(--hero);color:var(--hero-ink);border-radius:28px;padding:36px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;position:relative}
+.pitch h1{font-size:clamp(28px,4.4vw,44px);line-height:1.08;max-width:11em}
+.pitch p{color:#C9C4F5;max-width:28em}
+.rcpt{background:#fff;color:#14112E;border-radius:16px;padding:16px;max-width:300px;transform:rotate(-2deg);box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.rcpt div{display:flex;justify-content:space-between;padding:4px 0;font-size:13px}
+.rcpt .t{border-top:2px dashed #CFCBEA;margin-top:6px;padding-top:8px;font-weight:700;font-size:15px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px}
+.form{display:flex;flex-direction:column;gap:14px;justify-content:center}
+label{font-size:13px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px}
+input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.grid{display:grid;gap:16px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:1.4fr 1fr}
+.stat small{color:var(--muted);display:block}
+.stat b{font:700 26px var(--f1)}
+.bar{height:8px;border-radius:99px;background:var(--soft);overflow:hidden;margin:10px 0 6px;display:flex}
+.bar i{display:block;height:100%;background:var(--primary)}
+.bar i.r{background:var(--gold)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.row small{color:var(--muted)}
+.pill{font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--soft);color:var(--primary)}
+.pill.ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.pill.warn{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
+.wallet{background:var(--hero);color:var(--hero-ink);border-radius:24px;padding:26px;position:relative;overflow:hidden}
+.wallet::after{content:"";position:absolute;right:-50px;top:-50px;width:180px;height:180px;border-radius:50%;background:var(--primary);opacity:.55}
+.wallet>*{position:relative;z-index:1}
+.wallet .amt{font:700 40px var(--f1);margin:4px 0 14px}
+.wallet small{color:#C9C4F5}
+.led{font-variant-numeric:tabular-nums;font-weight:600}
+.pos{color:var(--ok)}.neg{color:var(--bad)}
+.h{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:14px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.on{opacity:1}
+.hide{display:none!important}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+@media (max-width:820px){.auth,.g2,.g3{grid-template-columns:1fr}.pitch{min-height:340px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><span class="mark"></span>CollabPay</div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn ghost sm" id="theme">Theme</button>
+      <button class="btn ghost sm hide" id="out">Log out</button>
+    </div>
+  </header>
+
+  <main id="auth" class="auth">
+    <section class="pitch">
+      <div>
+        <h1>Run campaigns. Pay creators. Every rupee tracked.</h1>
+        <p>Brands reserve budget when they approve. Creators see exactly what lands in the wallet before they apply.</p>
+      </div>
+      <div class="rcpt" aria-label="Sample payout breakdown">
+        <div><span>Creator fee</span><span>₹5,000</span></div>
+        <div><span>TDS 1%</span><span>−₹50</span></div>
+        <div class="t"><span>Lands in wallet</span><span>₹4,950</span></div>
+      </div>
+    </section>
+    <section class="card form">
+      <h2 id="atitle">Create your account</h2>
+      <div class="seg" role="group" aria-label="Role">
+        <button aria-pressed="true" data-role="brand">Brand</button>
+        <button aria-pressed="false" data-role="creator">Creator</button>
+      </div>
+      <div><label for="em">Email</label><input id="em" type="email" value="kasim@example.com"></div>
+      <div><label for="pw">Password</label><input id="pw" type="password" value="password123"></div>
+      <button class="btn" id="go">Sign up as Brand</button>
+      <p class="note">Prototype only. Data lives in memory.</p>
+    </section>
+  </main>
+
+  <main id="brand" class="hide">
+    <div class="h"><h2>Brand dashboard</h2><button class="btn" id="newc">New campaign</button></div>
+    <div class="grid g3" style="margin-bottom:16px">
+      <div class="card stat"><small>Total budget</small><b id="sb">₹50,000</b></div>
+      <div class="card stat"><small>Reserved for creators</small><b id="sr">₹0</b></div>
+      <div class="card stat"><small>Still available</small><b id="sa">₹50,000</b></div>
+    </div>
+    <div class="grid g2">
+      <section class="card">
+        <div class="h"><h3>Spring Skincare Launch</h3><span class="pill">Open</span></div>
+        <small style="color:var(--muted)">₹5,000 per creator · 4 slots · Apply by 15 Oct · Submit by 25 Oct</small>
+        <div class="bar" aria-hidden="true"><i id="b1" style="width:0"></i></div>
+        <small id="slots" style="color:var(--muted)">0 of 4 slots filled</small>
+        <h3 style="margin:20px 0 4px;font-size:16px">Applicants</h3>
+        <div id="apps"></div>
+      </section>
+      <section class="card">
+        <h3 style="font-size:16px">Review submissions</h3>
+        <div class="row"><div><b>@riya.reels</b><br><small>instagram.com/p/Cx9...</small></div><span class="pill warn">Pending</span></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+          <button class="btn sm" id="appr">Approve and pay</button>
+          <button class="btn ghost sm" id="rev">Request revision (0/2)</button>
+          <button class="btn ghost sm" id="rej">Reject</button>
+        </div>
+        <p class="note">Approving pays the creator and splits fee and GST for you.</p>
+      </section>
+    </div>
+  </main>
+
+  <main id="creator" class="hide">
+    <h2 style="margin-bottom:12px">Creator dashboard</h2>
+    <div class="grid g2">
+      <section class="wallet">
+        <small>Wallet balance</small>
+        <div class="amt" id="bal">₹4,950</div>
+        <button class="btn gold" id="wd">Withdraw all</button>
+      </section>
+      <section class="card">
+        <h3 style="font-size:16px">What you earn</h3>
+        <div class="row"><span>Campaign fee</span><span class="led">₹5,000</span></div>
+        <div class="row"><span>TDS 1%</span><span class="led neg">−₹50</span></div>
+        <div class="row"><b>Lands in wallet</b><b class="led">₹4,950</b></div>
+      </section>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <section class="card">
+        <h3 style="font-size:16px">Ledger</h3>
+        <div id="led"></div>
+      </section>
+      <section class="card">
+        <h3 style="font-size:16px">Open campaigns</h3>
+        <div class="row"><div><b>Spring Skincare Launch</b><br><small>₹5,000 · 2 slots left</small></div><button class="btn sm" id="apply">Apply</button></div>
+        <div class="row"><div><b>Monsoon Fitness Drop</b><br><small>₹3,500 · 5 slots left</small></div><span class="pill ok">Applied</span></div>
+      </section>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s), inr=n=>'₹'+n.toLocaleString('en-IN');
+const S={role:'brand',budget:50000,fee:5000,slots:4,approved:[],bal:4950,ledger:[{t:'Payout · Glow Serum',a:4950,d:'Today'}],
+ applicants:[{n:'@riya.reels',f:'12.4k'},{n:'@aarav.creates',f:'8.1k'},{n:'@mehak.daily',f:'21k'}]};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2200)}
+function show(id){['auth','brand','creator'].forEach(x=>$('#'+x).classList.toggle('hide',x!==id));$('#out').classList.toggle('hide',id==='auth')}
+function renderBrand(){
+ const res=S.approved.length*S.fee, left=S.budget-res;
+ $('#sr').textContent=inr(res);$('#sa').textContent=inr(left);
+ $('#b1').style.width=(S.approved.length/S.slots*100)+'%';
+ $('#slots').textContent=S.approved.length+' of '+S.slots+' slots filled';
+ $('#apps').innerHTML=S.applicants.map((a,i)=>{
+  const ok=S.approved.includes(i), full=S.approved.length>=S.slots||left<S.fee;
+  return `<div class="row"><div><b>${a.n}</b><br><small>${a.f} followers</small></div>${ok?'<span class="pill ok">Approved</span>':`<button class="btn sm" data-i="${i}" ${full?'disabled':''}>Approve · reserve ${inr(S.fee)}</button>`}</div>`}).join('');
+}
+function renderCreator(){
+ $('#bal').textContent=inr(S.bal);
+ $('#led').innerHTML=S.ledger.map(l=>`<div class="row"><div>${l.t}<br><small>${l.d}</small></div><span class="led ${l.a>0?'pos':'neg'}">${l.a>0?'+':'−'}${inr(Math.abs(l.a))}</span></div>`).join('')||'<p class="note">No transactions yet.</p>';
+ $('#wd').disabled=S.bal<=0;
+}
+document.querySelectorAll('[data-role]').forEach(b=>b.onclick=()=>{
+ S.role=b.dataset.role;document.querySelectorAll('[data-role]').forEach(x=>x.setAttribute('aria-pressed',x===b));
+ $('#go').textContent='Sign up as '+(S.role==='brand'?'Brand':'Creator')});
+$('#go').onclick=()=>{if(S.role==='brand'){show('brand');renderBrand()}else{show('creator');renderCreator()}};
+$('#out').onclick=()=>show('auth');
+$('#apps').onclick=e=>{const i=e.target.dataset.i;if(i==null)return;S.approved.push(+i);renderBrand();toast('Approved. '+inr(S.fee)+' reserved from budget')};
+$('#newc').onclick=()=>toast('Campaign form goes here');
+$('#appr').onclick=()=>{toast('Paid. Fee ₹500 + GST ₹90 billed to brand')};
+$('#rev').onclick=()=>toast('Revision requested');
+$('#rej').onclick=()=>toast('Submission rejected');
+$('#apply').onclick=e=>{e.target.outerHTML='<span class="pill ok">Applied</span>';toast('Application sent')};
+$('#wd').onclick=()=>{const a=S.bal;S.ledger.unshift({t:'Withdrawal · mock UPI',a:-a,d:'Just now'});S.bal=0;renderCreator();toast('Withdrawal requested')};
+$('#theme').onclick=()=>{const r=document.documentElement,d=r.dataset.theme==='dark'||(!r.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);r.dataset.theme=d?'light':'dark'};
+</script>
+</body>
+</html>

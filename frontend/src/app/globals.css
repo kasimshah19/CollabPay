@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #F4F3FB;
+  --surface: #FFFFFF;
+  --ink: #14112E;
+  --muted: #6B6890;
+  --line: #E4E2F2;
+  --primary: #6C4CFF;
+  --primary-ink: #FFFFFF;
+  --soft: #EEEAFF;
+  --gold: #FFB020;
+  --gold-ink: #14112E;
+  --ok: #16A57F;
+  --warn: #C97A00;
+  --bad: #D6395B;
+  --hero: #14112E;
+  --hero-ink: #FFFFFF;
+  --hero-muted: #C9C4F5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D0B1F;
+    --surface: #17143A;
+    --ink: #F1EFFF;
+    --muted: #9A97C4;
+    --line: #2B2760;
+    --primary: #8B73FF;
+    --primary-ink: #FFFFFF;
+    --soft: #26215E;
+    --gold: #FFB020;
+    --gold-ink: #14112E;
+    --ok: #3DD6A8;
+    --warn: #FFB020;
+    --bad: #FF6B8A;
+    --hero: #241E5E;
+    --hero-ink: #FFFFFF;
+    --hero-muted: #C9C4F5;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0D0B1F;
+  --surface: #17143A;
+  --ink: #F1EFFF;
+  --muted: #9A97C4;
+  --line: #2B2760;
+  --primary: #8B73FF;
+  --primary-ink: #FFFFFF;
+  --soft: #26215E;
+  --gold: #FFB020;
+  --gold-ink: #14112E;
+  --ok: #3DD6A8;
+  --warn: #FFB020;
+  --bad: #FF6B8A;
+  --hero: #241E5E;
+  --hero-ink: #FFFFFF;
+  --hero-muted: #C9C4F5;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+}
+
+@layer utilities {
+  .focus-ring:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 5px var(--gold);
+  }
+  
+  .tabular-money {
+    font-variant-numeric: tabular-nums;
+  }
+}
