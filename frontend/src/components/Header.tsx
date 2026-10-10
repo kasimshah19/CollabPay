@@ -4,7 +4,9 @@ import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import { usePathname } from "next/navigation";
 
-export function Header() {
+import { Suspense } from "react";
+
+function HeaderContent() {
   const pathname = usePathname();
   const isAuth = pathname === "/";
 
@@ -27,5 +29,13 @@ export function Header() {
         )}
       </div>
     </header>
+  );
+}
+
+export function Header() {
+  return (
+    <Suspense>
+      <HeaderContent />
+    </Suspense>
   );
 }

@@ -4,9 +4,10 @@ import { formatPaise } from "../../lib/money";
 export interface MoneyProps {
   paise: number;
   tone?: "default" | "credit" | "debit" | "gold";
+  className?: string;
 }
 
-export const Money: React.FC<MoneyProps> = ({ paise, tone = "default" }) => {
+export const Money: React.FC<MoneyProps> = ({ paise, tone = "default", className = "" }) => {
   const formatted = formatPaise(Math.abs(paise));
   
   let displayValue = formatted;
@@ -24,7 +25,7 @@ export const Money: React.FC<MoneyProps> = ({ paise, tone = "default" }) => {
   };
 
   return (
-    <span className={`tabular-money ${toneClasses[tone]}`}>
+    <span className={`tabular-money ${toneClasses[tone]} ${className}`}>
       {displayValue}
     </span>
   );

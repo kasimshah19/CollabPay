@@ -27,7 +27,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({ options, val
             onClick={() => onChange(option.value)}
             className={`px-4 py-1.5 text-sm font-medium rounded-pill transition-colors focus-ring ${
               isActive
-                ? "bg-surface text-ink shadow-[0_1px_6px_rgba(20,17,46,0.12)]" // soft shadow
+                ? "bg-surface text-ink shadow-sm" // soft shadow
                 : "text-muted hover:text-ink"
             }`}
           >
