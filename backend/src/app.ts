@@ -17,9 +17,14 @@ app.use(cors({ origin: env.FRONTEND_URL }));
 app.use(morgan("dev"));
 app.use(express.json());
 
+import campaignRouter from "./routes/campaign.routes.js";
+import applicationRouter from "./routes/application.routes.js";
+
 // --------------- Routes ------------------
 app.use("/api", healthRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/campaigns", campaignRouter);
+app.use("/api/applications", applicationRouter);
 
 if (env.NODE_ENV !== 'production') {
   app.use("/api/_debug", debugRouter);
